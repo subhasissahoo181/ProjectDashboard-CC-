@@ -1,32 +1,45 @@
 import { useState } from 'react';
 import EditableField from './EditableField';
-import DrafterDetails from './MoreData/Drafter'; // Import DrafterDetails component
-import EngineeringDetails from './MoreData/Engineering'; // Import EngineeringDetails component
-import MEPDetails from './MoreData/Mep'; // Import MEPDetails component
-import CivilDetails from './MoreData/Civil'; // Import CivilDetails component
-import data from './JsonData/Data.json'; // Importing JSON data
+import DrafterDetails from './MoreData/Drafter';
+import EngineeringDetails from './MoreData/Engineering';
+import MEPDetails from './MoreData/Mep';
+import CivilDetails from './MoreData/Civil';
+import data from './JsonData/Data.json';
 
 const ProjectDetails = ({ project, handleCloseModal }) => {
   const [editableProject, setEditableProject] = useState(project);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [nestedAccordion, setNestedAccordion] = useState({}); // Manage nested accordion state
-  const [showAlert, setShowAlert] = useState(false); // Manage alert visibility
-
+  const [nestedAccordion, setNestedAccordion] = useState({});
+  const [showAlert, setShowAlert] = useState(false);
+  const [assignedOptions, setAssignedOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
   // Handle input changes
   const handleInputChange = (key, value) => {
     setEditableProject((prev) => ({ ...prev, [key]: value }));
   };
 
+  // Handle checkbox changes
+  const handleCheckboxChange = (option) => {
+    setAssignedOptions((prev) =>
+      prev.includes(option)
+        ? prev.filter((item) => item !== option)
+        : [...prev, option]
+    );
+  };
+
+
   // Handle submit button click
   const handleSubmit = () => {
-    // Implement your submit logic here
-    console.log('Submitted Project Details:', editableProject);
-    // For example, send a request to update project details
-
-    // Show success alert
-    setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 2000); // Hide alert after 2 seconds
+    setLoading(true);
+    setTimeout(() => {
+      console.log('Submitted Project Details:', editableProject);
+      setLoading(false);
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 2000); // Hide alert after 2 seconds
+    }, 5000); // Simulate a 5-second loading time
   };
+
+ 
 
   // Toggle expand/collapse
   const toggleExpand = () => {
@@ -65,50 +78,56 @@ const ProjectDetails = ({ project, handleCloseModal }) => {
           <table className="w-full text-sm text-left border-2 border-gray-200 text-gray-500 dark:text-gray-400 rounded-[8px]">
             <tbody>
               {[
-                { label: "Project Name", key: "projectName" },
-                { label: "Project #", key: "projectNumber", isEditable: false }, // Uneditable
-                { label: "Invoice #", key: "invoiceNumber", isEditable: false }, // Uneditable
+                { label: 'Project Name', key: 'projectName' },
+                { label: 'Project #', key: 'projectNumber', isEditable: false },
+                { label: 'Invoice #', key: 'invoiceNumber', isEditable: false },
                 {
-                  label: "Salesman",
-                  key: "salesMan",
+                  label: 'Salesman',
+                  key: 'salesMan',
                   isDropdown: true,
-                  options: data.salesmen, // Using imported data
+                  options: data.salesmen,
                 },
                 {
-                  label: "Description",
-                  key: "description",
+                  label: 'Description',
+                  key: 'description',
                   isTextarea: true,
                 },
                 {
-                  label: "Overall Status",
-                  key: "overallProjectStatus",
+                  label: 'Overall Status',
+                  key: 'overallProjectStatus',
                   isDropdown: true,
-                  options: data.status, // Using imported data
+                  options: data.status,
                 },
                 {
-                  label: "State",
-                  key: "state",
+                  label: 'State',
+                  key: 'state',
                   isDropdown: true,
-                  options: data.states, // Using imported data
+                  options: data.states,
                 },
-                { label: "Priority", key: "priority" },
-                { label: "Project Files Folder", key: "projectFilesFolder" },
-                { label: "Project Notes", key: "projectNotes" },
-                { label: "Contract Link", key: "contractLink" },
-                { label: "Deposit Paid", key: "depositPaid" },
-                { label: "Estimated Budget", key: "estimatedBudget" },
-                { label: "Initial Status", key: "initialProjectStatus" },
-                { label: "Currently Assigned", key: "currentlyAssignedTo" },
+                { label: 'Priority', key: 'priority' },
+                { label: 'Project Files Folder', key: 'projectFilesFolder' },
+                { label: 'Project Notes', key: 'projectNotes' },
+                { label: 'Contract Link', key: 'contractLink' },
+                { label: 'Deposit Paid', key: 'depositPaid' },
+                { label: 'Estimated Budget', key: 'estimatedBudget' },
+                { label: 'Initial Status', key: 'initialProjectStatus' },
                 {
-                  label: "Client Project Name/Address",
-                  key: "clientProjectNameAddress",
+                  id: 'CurrentlyAssigned',
+                  label: 'Currently Assigned',
+                  key: 'currentlyAssignedTo',
+                  isDropdown: true,
+                  options: data.currentlyAssigned,
+                  isMultiple: true,
+                },
+                {
+                  label: 'Client Project Name/Address',
+                  key: 'clientProjectNameAddress',
                   isTextarea: true,
                 },
               ].map((item, index) => (
                 <tr
                   key={index}
-                  className={`odd:bg-[#EEEDEB] odd:dark:bg-gray-700 even:bg-[#FFFFFF] even:dark:bg-gray-400 border-b dark:border-gray-700 
-  hover:bg-[#758694] odd:hover:bg-[#758694] even:hover:bg-[#758694] cursor-pointer`}
+                  className={`odd:bg-[#EEEDEB] odd:dark:bg-gray-700 even:bg-[#FFFFFF] even:dark:bg-gray-400 border-b dark:border-gray-700 hover:bg-[#758694] odd:hover:bg-[#758694] even:hover:bg-[#758694] cursor-pointer`}
                 >
                   <th
                     scope="row"
@@ -118,23 +137,76 @@ const ProjectDetails = ({ project, handleCloseModal }) => {
                   </th>
                   <td className="px-4 py-2">
                     {item.isDropdown ? (
-                      <select
-                        className="form-select border-2 border-gray-200 rounded-[4px] p-1 w-full h-[30px] text-[14px]"
-                        value={editableProject[item.key]}
-                        onChange={(e) => handleInputChange(item.key, e.target.value)}
-                      >
-                        <option value="" disabled>Select...</option>
-                        {item.options.map((option) => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
+                      item.isMultiple ? (
+                        <div className="relative">
+                          <button
+                            onClick={() => toggleNestedAccordion(item.key)}
+                            className="bg-white border border-gray-300 rounded-md p-2 text-gray-700 text-[13px] w-full h-[30px] flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-gray-600"
+                          >
+                            {item.label}
+                            <svg
+                              className="w-4 h-4 ms-2 text-gray-500 dark:text-gray-300"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 10 6"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="m1 1 4 4 4-4"
+                              />
+                            </svg>
+                          </button>
+                          {nestedAccordion[item.key] && (
+                            <div className="absolute z-10 mt-2 w-full bg-white rounded-lg shadow-lg dark:bg-gray-700">
+                              <ul className="p-2 space-y-1 text-sm text-gray-700 dark:text-gray-200">
+                                {item.options.map((option) => (
+                                  <li key={option}>
+                                    <div className="flex items-center p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600">
+                                      <input
+                                        id={`checkbox-${option}`}
+                                        type="checkbox"
+                                        checked={assignedOptions.includes(option)}
+                                        onChange={() => handleCheckboxChange(option)}
+
+                                        className="position-fix text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600"
+
+                                      />
+                                      <label
+                                        htmlFor={`checkbox-${option}`}
+                                        className="ms-2 text-[13px] font-medium text-gray-900 dark:text-gray-300"
+                                      >
+                                        {option}
+                                      </label>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <select
+                          className="form-select border border-gray-300 rounded-md p-2 text-gray-700 text-[13px] w-full h-[36px] dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:focus:ring-blue-600"
+                          value={editableProject[item.key]}
+                          onChange={(e) => handleInputChange(item.key, e.target.value)}
+                        >
+                          <option value="" disabled>Select...</option>
+                          {item.options.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      )
                     ) : item.isTextarea ? (
                       <textarea
                         value={editableProject[item.key]}
                         onChange={(e) => handleInputChange(item.key, e.target.value)}
-                        className="border-2 border-gray-200 rounded p-3 w-full h-[50px] text-[14px]"
+                        className="border border-gray-300 rounded-md p-2 text-gray-700 text-[13px] w-full h-[50px] dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                       />
                     ) : (
                       <EditableField
@@ -144,6 +216,7 @@ const ProjectDetails = ({ project, handleCloseModal }) => {
                       />
                     )}
                   </td>
+
                 </tr>
               ))}
             </tbody>
@@ -288,22 +361,29 @@ const ProjectDetails = ({ project, handleCloseModal }) => {
 
         {/* Submit Button */}
         <div className="flex justify-center mt-4">
-        <button
-  onClick={handleSubmit}
-  className="w-[100px] h-[50px] text-[18px] bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-200 flex items-center justify-center"
->
-  Submit
-</button>
+          <button
+            onClick={handleSubmit}
+            className="w-[100px] h-[50px] text-[18px] bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-200 flex items-center justify-center"
+          >
+            Submit
+          </button>
 
         </div>
 
         {/* Success Alert */}
+       {loading && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="text-white text-2xl">Saving Project...</div>
+          </div>
+        )}
+
+
         {showAlert && (
           <div className="fixed top-4 right-4 bg-green-500 text-white p-3 rounded-lg shadow-lg w-[250px] h-[50px] text-[18px] flex items-center justify-center">
-          <i className="bi-check2 text-[25px] mr-2"></i>
+            <i className="bi-check2 text-[25px] mr-2"></i>
 
-  Submitted successfully!
-</div>
+            Project Save successfully!
+          </div>
 
         )}
       </div>

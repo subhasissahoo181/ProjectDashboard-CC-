@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 
 
-{
-    "user":[
-
-]
-}
-
-=======
 [
   {
     "name": "Admin",
@@ -88,4 +80,3 @@
     "role": ["drafter"]
   }
 ]
->>>>>>> 2a44a97b12ad634a9fd0efff90bfdd93ab8453c5

@@ -83,6 +83,14 @@
     "Wyoming",
     "Other"
   ],
+  "currentlyAssigned": [
+    "Emily Brown",
+    "Jane Smith",
+    "Alex Green",
+    "Michael Johnson"
+
+
+  ],
   "projects": [
     {
       "projectNumber": "10000",
