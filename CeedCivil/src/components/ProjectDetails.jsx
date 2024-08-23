@@ -194,7 +194,7 @@ const ProjectDetails = ({ project, handleCloseModal }) => {
                           value={editableProject[item.key]}
                           onChange={(e) => handleInputChange(item.key, e.target.value)}
                         >
-                          <option value="" disabled>Select...</option>
+                          <option value="{value}" disabled>Select...</option>
                           {item.options.map((option) => (
                             <option key={option} value={option}>
                               {option}

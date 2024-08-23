@@ -1,6 +1,6 @@
 import './App.css'; // Ensure custom styles are correctly applied
 
-import Home from './components/Home';
+// import Home from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
@@ -23,7 +23,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Dashboard />} />
         <Route path='/adminregister' element={<Register />} />
         <Route path='/adminlogin' element={<Login />} />
         <Route path='/dashboard' element={<Dashboard />}>

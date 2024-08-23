@@ -25,6 +25,7 @@ const ProjectTracker = () => {
             <thead className="bg-gray-800 text-white text-[15px] h-[50px]">
               <tr>
                 <th className="px-4 py-2 text-center">Project Name</th>
+                {/* <th className="px-4 py-2 text-center">currentlyAssignedTo</th> */}
                 <th className="px-4 py-2 text-center">Project #</th>
                 <th className="px-4 py-2 text-center">Invoice #</th>
                 <th className="px-4 py-2 text-center">Sales Man</th>
@@ -42,6 +43,7 @@ const ProjectTracker = () => {
                   style={{ height: "50px" }}
                 >
                   <td className="px-4 py-2 text-[14px] text-left">{project.projectName}</td>
+                  {/* <td className="px-4 py-2 text-[14px] text-left">{project.currentlyAssignedTo}</td> */}
                   <td className="px-4 py-2 text-[14px]">{project.projectNumber}</td>
                   <td className="px-4 py-2 text-[14px]">{project.invoiceNumber}</td>
                   <td className="px-4 py-2">
