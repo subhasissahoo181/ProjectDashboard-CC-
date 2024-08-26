@@ -88,7 +88,21 @@
     "Jane Smith",
     "Alex Green",
     "Michael Johnson"
-
+  ],
+  "priority":[
+    "High",
+    "Urgent",
+    "Normal"
+  ],
+  "depositPaid":[
+    "Yes",
+    "No"
+  ],
+  "innitialStatus":[
+    "Submitted for Permit",
+    "Pending S&S",
+    "Rework/Updates",
+    "In Work"
 
   ],
   "projects": [

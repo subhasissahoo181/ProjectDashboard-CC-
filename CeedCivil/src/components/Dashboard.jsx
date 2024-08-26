@@ -22,9 +22,9 @@ const Dashboard = () => {
       <div className="container mx-auto">
         <div className="flex flex-nowrap">
           <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-            <div className="fixed top-0 left-0 bottom-0 flex flex-col w-3/4 lg:w-80 sm:max-w-xs pt-6 pb-8 bg-gray-800 overflow-y-auto">
+            <div className="fixed top-0 left-0 bottom-0 flex flex-col w-3/4 lg:w-80 sm:w[20px] pt-6 pb-8 bg-gray-800 overflow-y-auto">
               <Link
-                to="/dashboard"
+                to="/dashboard/project-tracker"
                 className="flex items-center pb-3 mb-4 md:mb-1 md:mt-3 md:mr-auto text-white no-underline justify-center" // added justify-center to center the image
               >
                 <span className="text-[20px] font-extrabold hidden sm:inline flex flex-col items-center"> {/* Centering the text and image */}
@@ -64,7 +64,7 @@ const Dashboard = () => {
                     <i className="text-4xl bi-columns ml-2"></i>
                     <span className="ml-2 hidden sm:inline text-[20px]">Archive project</span>
                   </Link>
-                </li>                
+                </li>
 
                 <li className="w-full p-4">
                   <Link className="text-white px-0 align-middle">
@@ -79,16 +79,16 @@ const Dashboard = () => {
       </div>
 
       <div className="col p-0 m-0 w-full h-80px">
-      <div className="flex items-center justify-between p-2 bg-gray-800 text-white shadow-lg w-full h-20"> {/* Height updated to 80px */}
-  <h4 className="text-[30px] font-semibold text-center flex-grow">Welcome to CeedCivil</h4>
+        <div className="flex items-center justify-between p-2 bg-gray-800 text-white shadow-lg w-full h-20"> {/* Height updated to 80px */}
+          <h4 className="text-[30px] font-semibold text-center flex-grow">Welcome to CeedCivil</h4>
 
-  <button className="h-full bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 mr-5 rounded">
-  <Link to="/dashboard/newproject" className="text-white">
-    New Project
-  </Link>
-</button>
+          <button className="h-full bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 mr-5 rounded">
+            <Link to="/dashboard/newproject" className="text-white">
+              New Project
+            </Link>
+          </button>
 
-</div>
+        </div>
 
 
         <div className="p-4"> {/* New wrapper div for content alignment */}

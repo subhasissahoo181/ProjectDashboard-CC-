@@ -74,7 +74,7 @@ const ProjectDetails = ({ project, handleCloseModal }) => {
         </button>
 
         <h1 className="font-bold mb-5 text-[25px]">Project Details</h1>
-        <div className="relative overflow-x-auto shadow-lg p-4 border-2 border-gray-200 rounded-[8px]">
+        <div className="relative overflow-x-none shadow-lg p-4 border-2 border-gray-200 rounded-[8px]">
           <table className="w-full text-sm text-left border-2 border-gray-200 text-gray-500 dark:text-gray-400 rounded-[8px]">
             <tbody>
               {[
@@ -104,16 +104,28 @@ const ProjectDetails = ({ project, handleCloseModal }) => {
                   isDropdown: true,
                   options: data.states,
                 },
-                { label: 'Priority', key: 'priority' },
+                {
+                  label: 'Priority',
+                  key: 'priority',
+                  isDropdown: true,
+                  options: data.priority,
+                },
+               
                 { label: 'Project Files Folder', key: 'projectFilesFolder' },
-                { label: 'Project Notes', key: 'projectNotes' },
+                { label: 'Project Notes', key: 'projectNotes', isTextarea: true, },
                 { label: 'Contract Link', key: 'contractLink' },
-                { label: 'Deposit Paid', key: 'depositPaid' },
+                
+                {
+                  label: 'depositPaid',
+                  key: 'depositPaid',
+                  isDropdown: true,
+                  options: data.depositPaid,
+                },
                 { label: 'Estimated Budget', key: 'estimatedBudget' },
                 { label: 'Initial Status', key: 'initialProjectStatus' },
                 {
                   id: 'CurrentlyAssigned',
-                  label: 'Currently Assigned',
+                  label: 'CurrentlyAssigned',
                   key: 'currentlyAssignedTo',
                   isDropdown: true,
                   options: data.currentlyAssigned,

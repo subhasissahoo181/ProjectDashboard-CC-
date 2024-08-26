@@ -1,10 +1,10 @@
 // import React from 'react'
-
+import ProjectDetails from './ProjectDetails';
 const Newproject = () => {
   return (
-    <div>
-      <h1>New Project</h1>
-    </div>
+    <>
+     <ProjectDetails />
+    </>
   )
 }
 
